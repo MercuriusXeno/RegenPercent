@@ -100,7 +100,7 @@ namespace RegenPercent
             var regen = (int)Math.Floor(_healthRegenTracker);
             if (regen >= 1)
             {
-                _staminaRegenTracker = 0f;
+                _healthRegenTracker = 0f;
                 player.health = Math.Min(player.maxHealth, player.health + regen);
             }
         }
