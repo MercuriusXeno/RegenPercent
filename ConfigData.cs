@@ -2,14 +2,14 @@
 {
     public class ConfigData
     {
-        public float HealthRegenRate { get; set; }
-        public float StaminaRegenRate { get; set; }
+        public int HealthRegenRateStep { get; set; }
+        public int StaminaRegenRateStep { get; set; }
 
-        public ConfigData() : this(ModEntry.DefaultHealthRegenRate, ModEntry.DefaultStaminaRegenRate) { }
-        public ConfigData(float healthRegenRate, float staminaRegenRate) 
+        public ConfigData() : this(ModEntry.DefaultHealthRegenRateStep, ModEntry.DefaultStaminaRegenRateStep) {  }
+        public ConfigData(int healthRegenRateStep, int staminaRegenRateStep) 
         {
-            HealthRegenRate = healthRegenRate;
-            StaminaRegenRate = staminaRegenRate;
+            HealthRegenRateStep = healthRegenRateStep;
+            StaminaRegenRateStep = staminaRegenRateStep;
         }
     }
 }
