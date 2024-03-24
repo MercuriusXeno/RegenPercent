@@ -1,8 +1,8 @@
 {
   "Name": "Regen Percent",
   "Author": "MercuriusXeno",
-  "Version": "0.0.1",
-  "Description": "No-frills Percentage Regeneration",
+  "Version": "1.0.0",
+  "Description": "No-Frills Percentage-Based Stamina and Health Regeneration",
   "UniqueID": "Mercurius.RegenPercent",
   "EntryDll": "RegenPercent.dll",
   "MinimumApiVersion": "3.0.0",
