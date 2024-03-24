@@ -14,14 +14,15 @@ namespace RegenPercent
     internal sealed class ModEntry : Mod
     {
         private ConfigData _config;
+        public const float DefaultHealthRegenRate = 0.2f;
+        public const float DefaultStaminaRegenRate = 0.2f;
         const float MinHealthPerSecond = 0f;
-        const float MaxHealthPerSecond = 10f;
+        const float MaxHealthPerSecond = 2.5f;
         const float MinStaminaPerSecond = 0f;
-        const float MaxStaminaPerSecond = 10f;
-        const float PercentageCoefficient = 0.01f;
-        const float PerFrameCoefficient = 60f;
-        private float _healthRegenTracker = 0f;
-        private float _staminaRegenTracker = 0f;
+        const float MaxStaminaPerSecond = 2.5f;
+        const decimal PercentageCoefficient = 0.01m;
+        private decimal _healthRegenTracker = 0m;
+        private decimal _staminaRegenTracker = 0m;
 
         /// <summary>
         ///     Needed to supply the mod entry point which lets the mod do things.
@@ -59,7 +60,7 @@ namespace RegenPercent
         /// <param name="e">The event arguments</param>   
         private void UpdateTicked(object? sender, UpdateTickedEventArgs e)
         {
-            if (IsContextValidForRegen())
+            if (IsContextValidForRegen(e.IsOneSecond))
             {
                 HandleRegen(Game1.player);
             }
@@ -82,11 +83,11 @@ namespace RegenPercent
         /// <param name="player">The player regenerating</param>    
         private void HandleStaminaRegen(Farmer player)
         {
-            _staminaRegenTracker += player.MaxStamina * _config.StaminaRegenRate * PercentageCoefficient / PerFrameCoefficient;
+            _staminaRegenTracker += player.MaxStamina * (decimal)_config.StaminaRegenRate * PercentageCoefficient;
             var regen = (int)Math.Floor(_staminaRegenTracker);
             if (regen >= 1)
             {
-                _staminaRegenTracker = 0f;
+                _staminaRegenTracker -= regen;
                 player.Stamina = Math.Min(player.MaxStamina, player.Stamina + regen);
             }
         }
@@ -96,11 +97,11 @@ namespace RegenPercent
         /// <param name="player">The player regenerating</param>    
         private void HandleHealthRegen(Farmer player)
         {
-            _healthRegenTracker += player.maxHealth * _config.HealthRegenRate * PercentageCoefficient / PerFrameCoefficient;
+            _healthRegenTracker += player.maxHealth * (decimal)_config.HealthRegenRate * PercentageCoefficient;
             var regen = (int)Math.Floor(_healthRegenTracker);
             if (regen >= 1)
             {
-                _healthRegenTracker = 0f;
+                _healthRegenTracker -= regen;
                 player.health = Math.Min(player.maxHealth, player.health + regen);
             }
         }
@@ -109,9 +110,9 @@ namespace RegenPercent
         ///     Needed to determine if regen should happen on a given tick
         /// </summary>
         /// <returns>True if regen is valid, false otherwise</returns>        
-        private bool IsContextValidForRegen()
+        private bool IsContextValidForRegen(bool isOneSecond)
         {
-            return Context.IsWorldReady && Context.IsPlayerFree;
+            return isOneSecond && Context.IsWorldReady && Context.IsPlayerFree;
         }
 
         /// <summary>
