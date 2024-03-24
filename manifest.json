@@ -1,0 +1,10 @@
+{
+  "Name": "Regen Percent",
+  "Author": "MercuriusXeno",
+  "Version": "0.0.1",
+  "Description": "No-frills Percentage Regeneration",
+  "UniqueID": "Mercurius.RegenPercent",
+  "EntryDll": "RegenPercent.dll",
+  "MinimumApiVersion": "3.0.0",
+  "UpdateKeys": []
+}
